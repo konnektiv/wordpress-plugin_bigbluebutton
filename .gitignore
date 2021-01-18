@@ -8,6 +8,5 @@ composer.lock
 .eslintrc.js
 .stylelintscssrc.js
 stylelint.config.js
-composer.json
 package.json
 phpcs.xml.dist

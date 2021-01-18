@@ -1,0 +1,10 @@
+{
+  "name": "blindsidenetworks/bigbluebutton",
+  "description": "This lightweight plugin integrates BigBlueButton functionality into Wordpress.",
+  "type": "wordpress-plugin",
+  "license": "GPLv2 or later",
+  "require": {
+    "composer/installers": "~1.0",
+    "php": ">=7.2"
+  }
+}
