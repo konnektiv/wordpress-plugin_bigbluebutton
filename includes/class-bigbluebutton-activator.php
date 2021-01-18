@@ -95,7 +95,7 @@ class Bigbluebutton_Activator {
 			}
 			return;
 		}
-		if ( 'author' == $name ) {
+		if ( 'author' == $name || 'editor' == $name ) {
 			self::set_edit_room_capability( $role );
 		}
 		if ( 'author' == $name || 'editor' == $name || 'contributer' == $name || 'subscriber' == $name ) {
