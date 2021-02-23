@@ -41,15 +41,20 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 	/**
 	 * Display the widget.
 	 *
-	 * @param   Array      $args      List of default values stored for the widget.
-	 * @param   Array      $instance  List of custom values store for the widget.
+	 * @param Array $args List of default values stored for the widget.
+	 * @param Array $instance List of custom values store for the widget.
 	 */
 	public function widget( $args, $instance ) {
 		$tokens_string  = isset( $instance['text'] ) ? $instance['text'] : '';
 		$author         = isset( $instance['author'] ) ? $instance['author'] : 0;
+		$content        = ! empty( $instance['content'] ) ? nl2br( $instance['content'] ) : '';
 		$display_helper = new Bigbluebutton_Display_Helper( plugin_dir_path( __FILE__ ) );
 
 		echo $args['before_widget'] . $args['before_title'] . $args['widget_name'] . $args['after_title'];
+
+		if ( ! empty( $content ) ) {
+			echo $content;
+		}
 
 		echo Bigbluebutton_Tokens_Helper::join_form_from_tokens_string( $display_helper, $tokens_string, $author );
 
@@ -59,9 +64,10 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 	/**
 	 * Create widget form (for the admin panel).
 	 *
+	 * @param Array $instance Existing widget values to show in the widget form.
+	 *
 	 * @since   3.0.0
 	 *
-	 * @param   Array   $instance   Existing widget values to show in the widget form.
 	 */
 	public function form( $instance ) {
 		$text_id   = $this->get_field_id( 'text' );
@@ -69,23 +75,34 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 
 		$text_value = isset( $instance['text'] ) ? $instance['text'] : '';
 
+		$content_id   = $this->get_field_id( 'content' );
+		$content_name = $this->get_field_name( 'content' );
+
+		$content_value = isset( $instance['content'] ) ? $instance['content'] : '';
+
 		include 'partials/bigbluebutton-create-widget-display.php';
 	}
 
 	/**
 	 * Update widget settings.
 	 *
-	 * @since   3.0.0
-	 *
-	 * @param   Array   $new_instance  New values for widget.
-	 * @param   Array   $old_instance  Previous values for widget.
+	 * @param Array $new_instance New values for widget.
+	 * @param Array $old_instance Previous values for widget.
 	 *
 	 * @return  Array   $instance      Kept values for widget.
+	 * @since   3.0.0
+	 *
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance           = $old_instance;
-		$instance['text']   = isset( $new_instance['text'] ) ? wp_strip_all_tags( $new_instance['text'] ) : '';
+		$instance         = $old_instance;
+		$instance['text'] = isset( $new_instance['text'] ) ? wp_strip_all_tags( $new_instance['text'] ) : '';
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			$instance['content'] = isset( $new_instance['content'] ) ? $new_instance['content'] : '';
+		} else {
+			$instance['content'] = isset( $new_instance['content'] ) ? wp_kses_post( $new_instance['content'] ) : '';
+		}
 		$instance['author'] = isset( $old_instance['author'] ) ? $old_instance['author'] : get_current_user_id();
+
 		return $instance;
 	}
 
