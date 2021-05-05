@@ -168,14 +168,16 @@ class Bigbluebutton_Public {
 			return $content;
 		}
 
-		$token    = 'z' . $room_id;
-		$content .= '[bigbluebutton token="' . $token . '"]';
+		if ( ! has_shortcode( $content, 'bigbluebutton' ) ) {
+			$token   = 'z' . $room_id;
+			$content .= '[bigbluebutton token="' . $token . '"]';
 
-		// Add recordings list to post content if the room is recordable.
-		$room_can_record = get_post_meta( $room_id, 'bbb-room-recordable', true );
+			// Add recordings list to post content if the room is recordable.
+			$room_can_record = get_post_meta( $room_id, 'bbb-room-recordable', true );
 
-		if ( 'true' == $room_can_record ) {
-			$content .= '[bigbluebutton type="recording" token="' . $token . '"]';
+			if ( 'true' == $room_can_record ) {
+				$content .= '[bigbluebutton type="recording" token="' . $token . '"]';
+			}
 		}
 
 		return $content;
