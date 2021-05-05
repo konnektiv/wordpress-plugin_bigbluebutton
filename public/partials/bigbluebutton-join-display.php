@@ -41,5 +41,5 @@
 			</label>
 		</div>
 	<?php } ?>
-	<input class="bbb-button" type="submit" class="button button-primary" value="<?php esc_html_e( 'Join', 'bigbluebutton' ); ?>">
+	<input class="bbb-button" type="submit" class="button button-primary" value="<?php echo ( isset( $button_text ) ? $button_text : esc_html( 'Join', 'bigbluebutton' ) ); ?>">
 </form>
