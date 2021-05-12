@@ -31,7 +31,7 @@ class Bigbluebutton_Api {
 	 * 
 	 * @return  Integer $return_code|404    HTML response of the bigbluebutton server.
 	 */
-	public static function create_meeting( $room_id, $logout_url ) {
+	public static function create_meeting( $room_id, $logout_url, $welcome = '' ) {
 		$rid = intval( $room_id );
 
 		if ( get_post( $rid ) === false || 'bbb-room' != get_post_type( $rid ) ) {
@@ -51,6 +51,10 @@ class Bigbluebutton_Api {
 			'logoutURL'   => esc_url( $logout_url ),
 			'record'      => $recordable,
 		);
+
+		if ( ! empty( $welcome ) ) {
+			$arr_params['welcome'] = str_replace( '%PERMALINK%', get_permalink( $room_id ), $welcome );
+		}
 
 		$url = self::build_url( 'create', $arr_params );
 
@@ -84,7 +88,7 @@ class Bigbluebutton_Api {
 	 * 
 	 * @return  String  $url|null   URL to enter the meeting.
 	 */
-	public static function get_join_meeting_url( $room_id, $username, $password, $logout_url = null) {
+	public static function get_join_meeting_url( $room_id, $username, $password, $logout_url = null, $welcome = '' ) {
 
 		$rid   = intval( $room_id );
 		$uname = sanitize_text_field( $username );
@@ -96,7 +100,7 @@ class Bigbluebutton_Api {
 		}
 
 		if ( ! self::is_meeting_running( $rid ) ) {
-			$code = self::create_meeting( $rid, $lo_url );
+			$code = self::create_meeting( $rid, $lo_url, $welcome );
 			if ( 200 !== $code ) {
 				wp_die( esc_html__( 'It is currently not possible to create rooms on the server. Please contact support for help.', 'bigbluebutton' ) );
 			}
@@ -108,6 +112,10 @@ class Bigbluebutton_Api {
 			'fullName'  => $uname,
 			'password'  => rawurlencode( $pword ),
 		);
+
+		if ( ! empty( $welcome ) ) {
+			$arr_params['welcome'] = str_replace( '%PERMALINK%', get_permalink( $room_id ), $welcome );
+		}
 
 		$url = self::build_url( 'join', $arr_params );
 

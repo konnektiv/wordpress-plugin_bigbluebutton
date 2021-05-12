@@ -59,7 +59,7 @@ class Bigbluebutton_Tokens_Helper {
 	 *
 	 * @return  String                          $content            HTML string containing join forms for the corresponding rooms.
 	 */
-	public static function join_form_from_tokens_string( $display_helper, $token_string, $author, $button_text = '' ) {
+	public static function join_form_from_tokens_string( $display_helper, $token_string, $author, $button_text = '', $welcome = '' ) {
 		$content             = '';
 		$tokens_arr          = preg_split( '/\,/', $token_string );
 		$meta_nonce          = wp_create_nonce( 'bbb_join_room_meta_nonce' );
@@ -94,7 +94,7 @@ class Bigbluebutton_Tokens_Helper {
 			if ( isset( $_REQUEST['room_id'] ) ) {
 				$selected_room = $_REQUEST['room_id'];
 			}
-			$join_form = $display_helper->get_join_form_as_string( $selected_room, $meta_nonce, $access_as_moderator, $access_as_viewer, $access_using_code, $button_text );
+			$join_form = $display_helper->get_join_form_as_string( $selected_room, $meta_nonce, $access_as_moderator, $access_as_viewer, $access_using_code, $button_text, $welcome );
 			if ( count( $rooms ) > 1 ) {
 				$join_form = $display_helper->get_room_list_dropdown_as_string( $rooms, $selected_room, $join_form );
 			}
