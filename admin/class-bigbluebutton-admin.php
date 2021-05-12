@@ -160,6 +160,7 @@ class Bigbluebutton_Admin {
 			'token'          => __( 'Token', 'bigbluebutton' ),
 			'moderator-code' => __( 'Moderator Code', 'bigbluebutton' ),
 			'viewer-code'    => __( 'Viewer Code', 'bigbluebutton' ),
+			'last-active'    => __( 'Last active', 'bigbluebutton' ),
 		);
 
 		$columns = array_merge( $columns, $custom_columns );
@@ -200,6 +201,10 @@ class Bigbluebutton_Admin {
 				break;
 			case 'viewer-code':
 				echo esc_attr( get_post_meta( $post_id, 'bbb-room-viewer-code', true ) );
+				break;
+			case 'last-active':
+				$last_active = get_post_meta( $post_id, 'bbb-room-last-active', true );
+				echo ( $last_active ? date_i18n( get_option('date_format') . ' ' . get_option('time_format'), $last_active ) : 'N/A' );
 				break;
 		}
 	}

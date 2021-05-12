@@ -66,6 +66,9 @@ class Bigbluebutton_Api {
 
 		$response = self::response_to_xml( $full_response );
 
+		// save last active date
+		update_post_meta( $rid, 'bbb-room-last-active', time() );
+
 		if ( property_exists( $response, 'returncode' ) && 'SUCCESS' == $response->returncode ) {
 			return 200;
 		} elseif ( property_exists( $response, 'returncode' ) && 'FAILURE' == $response->returncode ) {
