@@ -157,10 +157,12 @@ class Bigbluebutton_Tokens_Helper {
 	 */
 	public static function find_room_id_by_token( $token, $author ) {
 		// Only show room if author can create rooms.
-		if ( ! user_can( $author, 'edit_bbb_rooms' ) ) {
+		// FIXME: why check for the author here? The author should always be able to edit bbb rooms.
+		// better would be a check on the current user if he is allowed to see this room
+	/*	if ( ! user_can( $author, 'edit_bbb_rooms' ) ) {
 			self::$error_message = esc_html__( 'This user does not have permission to display any rooms in a shortcode or widget.', 'bigbluebutton' );
 			return 0;
-		}
+		}*/
 
 		if ( 'z' == substr( $token, 0, 1 ) ) {
 			return self::check_if_room_exists_for_new_token_format( $token, $author );
