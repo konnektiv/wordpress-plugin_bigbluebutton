@@ -31,7 +31,7 @@ class Bigbluebutton_Api {
 	 * 
 	 * @return  Integer $return_code|404    HTML response of the bigbluebutton server.
 	 */
-	public static function create_meeting( $room_id, $logout_url, $welcome = '' ) {
+	public static function create_meeting( $room_id, $logout_url ) {
 		$rid = intval( $room_id );
 
 		if ( get_post( $rid ) === false || 'bbb-room' != get_post_type( $rid ) ) {
@@ -43,6 +43,8 @@ class Bigbluebutton_Api {
 		$viewer_code    = get_post_meta( $rid, 'bbb-room-viewer-code', true );
 		$recordable     = get_post_meta( $rid, 'bbb-room-recordable', true );
 		$meeting_id     = get_post_meta( $rid, 'bbb-room-meeting-id', true );
+		$welcome        = get_post_meta( $rid, 'bbb-room-welcome-msg', true );
+
 		$arr_params     = array(
 			'name'        => esc_attr( $name ),
 			'meetingID'   => rawurlencode( $meeting_id ),
@@ -53,7 +55,8 @@ class Bigbluebutton_Api {
 		);
 
 		if ( ! empty( $welcome ) ) {
-			$arr_params['welcome'] = str_replace( '%PERMALINK%', get_permalink( $room_id ), $welcome );
+			$arr_params['welcome'] = preg_replace("/\r\n|\r|\n/", '<br/>',
+				str_replace( '%PERMALINK%', get_permalink( $room_id ), $welcome ) );
 		}
 
 		$url = self::build_url( 'create', $arr_params );
@@ -91,7 +94,7 @@ class Bigbluebutton_Api {
 	 * 
 	 * @return  String  $url|null   URL to enter the meeting.
 	 */
-	public static function get_join_meeting_url( $room_id, $username, $password, $logout_url = null, $welcome = '' ) {
+	public static function get_join_meeting_url( $room_id, $username, $password, $logout_url = null ) {
 
 		$rid   = intval( $room_id );
 		$uname = sanitize_text_field( $username );
@@ -103,7 +106,7 @@ class Bigbluebutton_Api {
 		}
 
 		if ( ! self::is_meeting_running( $rid ) ) {
-			$code = self::create_meeting( $rid, $lo_url, $welcome );
+			$code = self::create_meeting( $rid, $lo_url );
 			if ( 200 !== $code ) {
 				wp_die( esc_html__( 'It is currently not possible to create rooms on the server. Please contact support for help.', 'bigbluebutton' ) );
 			}
@@ -115,10 +118,6 @@ class Bigbluebutton_Api {
 			'fullName'  => $uname,
 			'password'  => rawurlencode( $pword ),
 		);
-
-		if ( ! empty( $welcome ) ) {
-			$arr_params['welcome'] = str_replace( '%PERMALINK%', get_permalink( $room_id ), $welcome );
-		}
 
 		$url = self::build_url( 'join', $arr_params );
 

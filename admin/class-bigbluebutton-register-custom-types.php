@@ -104,6 +104,15 @@ class Bigbluebutton_Register_Custom_Types {
 	}
 
 	/**
+	 * Create moderator and viewer code metaboxes on room creation and edit.
+	 *
+	 * @since   3.0.0
+	 */
+	public function register_welcome_msg_metaboxes() {
+		add_meta_box( 'bbb-welcome-msg', __( 'Welcome Message', 'bigbluebutton' ), array( $this, 'display_welcome_message_metabox' ), 'bbb-room' );
+	}
+
+	/**
 	 * Show recordable option in room creation to users who have the corresponding capability.
 	 *
 	 * @since   3.0.0
@@ -153,6 +162,21 @@ class Bigbluebutton_Register_Custom_Types {
 		$existing_value   = get_post_meta( $object->ID, 'bbb-room-viewer-code', true );
 		wp_nonce_field( 'bbb-room-viewer-code-nonce', 'bbb-room-viewer-code-nonce' );
 		require 'partials/bigbluebutton-room-code-metabox-display.php';
+	}
+
+	/**
+	 * Display welcome message metabox.
+	 *
+	 * @since   3.0.0
+	 *
+	 * @param   Object $object     The object that has the room ID.
+	 */
+	public function display_welcome_message_metabox( $object ) {
+		$message       = '';
+		$message_name  = 'bbb-welcome-msg';
+		$existing_value   = get_post_meta( $object->ID, 'bbb-room-welcome-msg', true );
+		wp_nonce_field( 'bbb-room-welcome-msg-nonce', 'bbb-room-welcome-msg-nonce' );
+		require 'partials/bigbluebutton-welcome-msg-metabox-display.php';
 	}
 
 	/**

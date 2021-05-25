@@ -38,8 +38,9 @@ class Bigbluebutton_Admin_Api {
 			$moderator_code = sanitize_text_field( $_POST['bbb-moderator-code'] );
 			$viewer_code    = sanitize_text_field( $_POST['bbb-viewer-code'] );
 			$recordable     = ( array_key_exists( 'bbb-room-recordable', $_POST ) && sanitize_text_field( $_POST['bbb-room-recordable'] ) == 'checked' );
-
 			$wait_for_mod = ( isset( $_POST['bbb-room-wait-for-moderator'] ) && sanitize_text_field( $_POST['bbb-room-wait-for-moderator'] ) == 'checked' );
+			// TODO: not sanitation here to allow html tags
+			$welcome_msg    = $_POST['bbb-welcome-msg'];
 
 			// Ensure neither code is empty.
 			if ( '' == $moderator_code ) {
@@ -66,6 +67,9 @@ class Bigbluebutton_Admin_Api {
 			update_post_meta( $post_id, 'bbb-room-recordable', ( $recordable ? 'true' : 'false' ) );
 			update_post_meta( $post_id, 'bbb-room-wait-for-moderator', ( $wait_for_mod ? 'true' : 'false' ) );
 
+			if ( $welcome_msg != '' ) {
+				update_post_meta( $post_id, 'bbb-room-welcome-msg', $welcome_msg );
+			}
 		} else {
 			return $post_id;
 		}

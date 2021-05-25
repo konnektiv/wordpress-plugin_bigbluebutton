@@ -59,7 +59,6 @@ class Bigbluebutton_Public_Room_Api {
 	public function bbb_user_join_room() {
 		if ( ! empty( $_POST['action'] ) && 'join_room' == $_POST['action'] && wp_verify_nonce( $_POST['bbb_join_room_meta_nonce'], 'bbb_join_room_meta_nonce' ) ) {
 			$room_id             = $_POST['room_id'];
-			$welcome             = $_POST['welcome'];
 			$user                = wp_get_current_user();
 			$entry_code          = '';
 			$username            = $this->get_meeting_username( $user );
@@ -89,7 +88,7 @@ class Bigbluebutton_Public_Room_Api {
 			} else {
 				wp_die( esc_html__( 'You do not have permission to enter the room. Please request permission.', 'bigbluebutton' ) );
 			}
-			$this->join_meeting( $return_url, $room_id, $username, $entry_code, $viewer_code, $wait_for_mod, $welcome );
+			$this->join_meeting( $return_url, $room_id, $username, $entry_code, $viewer_code, $wait_for_mod );
 		}
 	}
 
@@ -169,8 +168,8 @@ class Bigbluebutton_Public_Room_Api {
 	 * @param   String  $viewer_code    The entry code for viewers.
 	 * @param   Boolean $wait_for_mod   Boolean value for if the room requires a moderator to join before any viewers.
 	 */
-	private function join_meeting( $return_url, $room_id, $username, $entry_code, $viewer_code, $wait_for_mod, $welcome = '' ) {
-		$join_url = Bigbluebutton_Api::get_join_meeting_url( $room_id, $username, $entry_code, $return_url, $welcome );
+	private function join_meeting( $return_url, $room_id, $username, $entry_code, $viewer_code, $wait_for_mod ) {
+		$join_url = Bigbluebutton_Api::get_join_meeting_url( $room_id, $username, $entry_code, $return_url );
 
 		if ( $entry_code == $viewer_code && 'true' == $wait_for_mod ) {
 			if ( Bigbluebutton_Api::is_meeting_running( $room_id ) ) {

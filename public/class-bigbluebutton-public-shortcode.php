@@ -58,9 +58,6 @@ class Bigbluebutton_Public_Shortcode {
 		$button_text   = isset( $atts['button_text'] ) ?
 			$atts['button_text'] : esc_html( 'Join', 'bigbluebutton' );
 
-		$welcome   = isset( $atts['welcome'] ) ?
-			$atts['welcome'] : false;
-
 		$tokens_string = Bigbluebutton_Tokens_Helper::get_token_string_from_atts( $atts );
 
 		if ( empty( $tokens_string ) && get_post_type() === 'bbb-room' ) {
@@ -68,7 +65,7 @@ class Bigbluebutton_Public_Shortcode {
 		}
 
 		if ( 'room' == $type ) {
-			$content .= Bigbluebutton_Tokens_Helper::join_form_from_tokens_string( $display_helper, $tokens_string, $author, $button_text, $welcome );
+			$content .= Bigbluebutton_Tokens_Helper::join_form_from_tokens_string( $display_helper, $tokens_string, $author, $button_text );
 		} elseif ( 'recording' == $type ) {
 			$content .= Bigbluebutton_Tokens_Helper::recordings_table_from_tokens_string( $display_helper, $tokens_string, $author );
 		}

@@ -3,7 +3,6 @@
 	<input id="bbb_join_room_id" type="hidden" name="room_id" value="<?php echo $room_id; ?>">
 	<input type="hidden" id="bbb_join_room_meta_nonce" name="bbb_join_room_meta_nonce" value="<?php echo $meta_nonce; ?>">
 	<input type="hidden" name="REQUEST_URI" value="<?php echo $current_url; ?>">
-    <input type="hidden" name="welcome" value="<?php echo $welcome; ?>">
 	<?php if ( ! is_user_logged_in() ) { ?>
 		<div id="bbb_join_with_username" class="bbb-join-form-block">
 			<label id="bbb_meeting_name_label" class="bbb-join-room-label"><?php esc_html_e( 'Name' ); ?>: </label>
