@@ -169,6 +169,37 @@ class Bigbluebutton_Admin {
 	}
 
 	/**
+	 * configure sortable room list columns
+	 *
+	 * @param $columns
+	 *
+	 * @return mixed
+	 */
+	public function manage_sortable_columns( $columns ) {
+		$columns['last-active'] = 'bbb-room-last-active';
+
+		return $columns;
+	}
+
+	/**
+	 * implement sorting by last active room in backend
+	 *
+	 * @param $query
+	 */
+	function support_sort_by_last_active( $query ) {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		$orderby = $query->get( 'orderby' );
+
+		if ( 'bbb-room-last-active' == $orderby ) {
+			$query->set( 'meta_key', 'bbb-room-last-active' );
+			$query->set( 'orderby', 'meta_value_num' );
+		}
+	}
+
+	/**
 	 * Fill in custom column information on rooms list table.
 	 *
 	 * @since 3.0.0

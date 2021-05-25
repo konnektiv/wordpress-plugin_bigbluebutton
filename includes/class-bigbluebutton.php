@@ -274,6 +274,10 @@ class Bigbluebutton {
 		// Show custom fields in rooms table.
 		$this->loader->add_action( 'manage_posts_custom_column', $plugin_admin, 'bbb_room_custom_columns', 10, 2 );
 		$this->loader->add_filter( 'manage_bbb-room_posts_columns', $plugin_admin, 'add_custom_room_column_to_list' );
+		$this->loader->add_filter( 'manage_edit-bbb-room_sortable_columns', $plugin_admin, 'manage_sortable_columns' );
+
+		// support sort by last active column
+		$this->loader->add_action( 'pre_get_posts', $plugin_admin, 'support_sort_by_last_active' );
 
 	}
 
