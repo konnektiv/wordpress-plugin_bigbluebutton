@@ -168,10 +168,18 @@ class Bigbluebutton_Public {
 			return $content;
 		}
 
+		$show_recordings = false;
 		if ( ! has_shortcode( $content, 'bigbluebutton' ) ) {
 			$token   = 'z' . $room_id;
 			$content .= '[bigbluebutton token="' . $token . '"]';
+			$show_recordings = true;
 
+		} elseif ( strpos( '[bigbluebutton type="recording"', $content ) === false ) {
+			// only shortcode to join meeting is present
+			$show_recordings = true;
+		}
+
+		if ( $show_recordings ) {
 			// Add recordings list to post content if the room is recordable.
 			$room_can_record = get_post_meta( $room_id, 'bbb-room-recordable', true );
 
