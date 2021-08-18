@@ -46,6 +46,7 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		$tokens_string  = isset( $instance['text'] ) ? $instance['text'] : '';
+		$button_text    = isset( $instance['button_text'] ) ? $instance['button_text'] : '';
 		$author         = isset( $instance['author'] ) ? $instance['author'] : 0;
 		$content        = ! empty( $instance['content'] ) ? nl2br( $instance['content'] ) : '';
 		$display_helper = new Bigbluebutton_Display_Helper( plugin_dir_path( __FILE__ ) );
@@ -56,7 +57,7 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 			echo $content;
 		}
 
-		echo Bigbluebutton_Tokens_Helper::join_form_from_tokens_string( $display_helper, $tokens_string, $author );
+		echo Bigbluebutton_Tokens_Helper::join_form_from_tokens_string( $display_helper, $tokens_string, $author, $button_text );
 
 		echo $args['after_widget'];
 	}
@@ -72,13 +73,15 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 	public function form( $instance ) {
 		$text_id   = $this->get_field_id( 'text' );
 		$text_name = $this->get_field_name( 'text' );
-
 		$text_value = isset( $instance['text'] ) ? $instance['text'] : '';
 
 		$content_id   = $this->get_field_id( 'content' );
 		$content_name = $this->get_field_name( 'content' );
-
 		$content_value = isset( $instance['content'] ) ? $instance['content'] : '';
+
+		$button_text_id   = $this->get_field_id( 'button_text' );
+		$button_text_name = $this->get_field_name( 'button_text' );
+		$button_text_value = isset( $instance['button_text'] ) ? $instance['button_text'] : '';
 
 		include 'partials/bigbluebutton-create-widget-display.php';
 	}
@@ -96,6 +99,7 @@ class Bigbluebutton_Public_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance         = $old_instance;
 		$instance['text'] = isset( $new_instance['text'] ) ? wp_strip_all_tags( $new_instance['text'] ) : '';
+		$instance['button_text'] = isset( $new_instance['button_text'] ) ? wp_strip_all_tags( $new_instance['button_text'] ) : '';
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			$instance['content'] = isset( $new_instance['content'] ) ? $new_instance['content'] : '';
 		} else {
