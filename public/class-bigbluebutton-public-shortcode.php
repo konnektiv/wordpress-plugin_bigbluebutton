@@ -55,8 +55,7 @@ class Bigbluebutton_Public_Shortcode {
 			unset( $atts['type'] );
 		}
 
-		$button_text   = isset( $atts['button_text'] ) ?
-			$atts['button_text'] : esc_html( 'Join', 'bigbluebutton' );
+		$button_text   = $atts['button_text'] ?? __( 'Join', 'bigbluebutton' );
 
 		$tokens_string = Bigbluebutton_Tokens_Helper::get_token_string_from_atts( $atts );
 
