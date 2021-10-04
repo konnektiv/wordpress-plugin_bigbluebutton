@@ -147,6 +147,24 @@ class Bigbluebutton_Public {
 	}
 
 	/**
+	 * Add post classes
+	 *
+	 * @since   3.0.0
+	 *
+	 * @param string[] $classes An array of post class names.
+	 * @param string[] $class   An array of additional class names added to the post.
+	 * @param int      $post_id The post ID.
+	 */
+	public function add_post_class( $classes, $class, $post_id ) {
+
+		if ( get_post_type( $post_id ) === 'bbb-room' && get_query_var( 'bigbluebutton_wait_for_mod' ) ) {
+			$classes[] = 'bbb-wait-for-mod';
+		}
+
+		return $classes;
+	}
+
+	/**
 	 * Display join room button and recordings in the bbb-room post.
 	 *
 	 * @since   3.0.0
