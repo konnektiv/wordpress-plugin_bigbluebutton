@@ -309,7 +309,7 @@ class Bigbluebutton {
 		$this->loader->add_filter( 'query_vars', $plugin_public, 'add_query_vars' );
 
 		// set post class
-		$this->loader->add_filter( 'post_class', $plugin_public, 'add_post_class', 10, 3 );
+		$this->loader->add_filter( 'body_class', $plugin_public, 'add_body_class' );
 
 		// Join room API.
 		$this->loader->add_action( 'admin_post_join_room', $plugin_public_room_api, 'bbb_user_join_room' );

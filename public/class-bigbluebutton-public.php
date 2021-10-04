@@ -147,17 +147,15 @@ class Bigbluebutton_Public {
 	}
 
 	/**
-	 * Add post classes
+	 * Add body classes
 	 *
 	 * @since   3.0.0
 	 *
-	 * @param string[] $classes An array of post class names.
-	 * @param string[] $class   An array of additional class names added to the post.
-	 * @param int      $post_id The post ID.
+	 * @param string[] $classes An array of body class names.
 	 */
-	public function add_post_class( $classes, $class, $post_id ) {
+	public function add_body_class( $classes ) {
 
-		if ( get_post_type( $post_id ) === 'bbb-room' && get_query_var( 'bigbluebutton_wait_for_mod' ) ) {
+		if ( get_post_type() === 'bbb-room' && get_query_var( 'bigbluebutton_wait_for_mod' ) ) {
 			$classes[] = 'bbb-wait-for-mod';
 		}
 
