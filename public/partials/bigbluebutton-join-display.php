@@ -41,5 +41,7 @@
 			</label>
 		</div>
 	<?php } ?>
-	<input type="submit" class="bbb-button button button-primary" value="<?php echo ( isset( $button_text ) && ! empty( $button_text ) ? $button_text : __( 'Join', 'bigbluebutton' ) ); ?>">
+
+    <button class="bbb-button button button-primary"><?php echo ( isset( $button_text ) && ! empty( $button_text ) ? $button_text : __( 'Join', 'bigbluebutton' ) ); ?></button>
+
 </form>
