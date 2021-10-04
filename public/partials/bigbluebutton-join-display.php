@@ -25,6 +25,7 @@
 	<br>
 	<?php if ( isset( $_REQUEST['bigbluebutton_wait_for_mod'] ) && $_REQUEST['room_id'] == $room_id ) { ?>
 		<div class="bbb-join-form-block">
+			<?php do_action( 'bbb_join_form_block_start' ); ?>
 			<label id="bbb-wait-for-mod-msg"
 				data-room-id="<?php echo $room_id; ?>"
 				<?php if ( isset( $_REQUEST['temp_entry_pass'] ) ) { ?>
