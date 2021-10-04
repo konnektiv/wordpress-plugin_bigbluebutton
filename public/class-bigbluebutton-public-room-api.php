@@ -188,7 +188,7 @@ class Bigbluebutton_Public_Room_Api {
 				if ( ! $access_as_viewer ) {
 					$query['temp_entry_pass'] = wp_create_nonce( 'bigbluebutton_entry_code_' . $entry_code );
 				}
-				wp_redirect( add_query_arg( $query, $return_url ) );
+				wp_redirect( add_query_arg( $query, apply_filters( 'bbb_wait_for_mod_url', $return_url, $room_id ) ) );
 			}
 		} else {
 			wp_redirect( $join_url );
