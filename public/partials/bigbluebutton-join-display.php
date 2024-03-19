@@ -29,10 +29,10 @@
 			<label id="bbb-wait-for-mod-msg"
 				data-room-id="<?php echo $room_id; ?>"
 				<?php if ( isset( $_REQUEST['temp_entry_pass'] ) ) { ?>
-					data-temp-room-pass="<?php echo $_REQUEST['temp_entry_pass']; ?>"
+					data-temp-room-pass="<?php echo esc_attr( $_REQUEST['temp_entry_pass'] ); ?>"
 				<?php } ?>
 				<?php if ( isset( $_REQUEST['username'] ) ) { ?>
-					data-room-username="<?php echo $_REQUEST['username']; ?>"
+					data-room-username="<?php echo esc_attr( $_REQUEST['username'] ); ?>"
 				<?php } ?>>
 				<?php if ( $heartbeat_available ) { ?>
 					<?php esc_html_e( 'The meeting has not started yet. You will be automatically redirected to the meeting when it starts.', 'bigbluebutton' ); ?>
