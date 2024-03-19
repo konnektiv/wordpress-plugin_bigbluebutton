@@ -5,7 +5,7 @@ Tags: blindsidenetworks, bigbluebutton, opensource, open source, web, conferenci
 Requires at least: 5.1
 Tested up to: 5.3.2
 Requires PHP: 7.2
-Stable tag: 3.0.0-beta.4
+Stable tag: 3.0.0-beta.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,9 @@ If a user has the capability to manage recordings, they will see a pencil icon n
 
 == Changelog ==
 
+
+= 3.0.0-beta.5 =
+* Bug. Fixed potential reflected XSS issue, see: https://wpscan.com/vulnerability/8bb35d84-47c1-4b26-b6f2-6cf97e358c9b/
 
 = 3.0.0-beta.4 =
 * Bug. Fixed issue with plugin permission capability that prevented rooms to be accessed after upgrade.
