@@ -14,8 +14,9 @@
 	<?php } else { ?>
 		<div id="bbb_join_with_password" class="bbb-join-form-block" style="display:none;">
 	<?php } ?>
-			<label id="bbb_meeting_access_code_label" class="bbb-join-room-label"><?php esc_html_e( 'Access Code', 'bigbluebutton' ); ?>: </label>
+			<label id="bbb_meeting_access_code_label" class="bbb-join-room-label"><?php esc_html_e( 'Access Code', 'bigbluebutton' ); ?>:
 			<input type="text" name="bbb_meeting_access_code" aria-labelledby="bbb_meeting_access_code_label" class="bbb-join-room-input">
+            </label>
 		</div>
 		<?php if ( isset( $_REQUEST['password_error'] ) && $_REQUEST['room_id'] == $room_id ) { ?>
 			<div class="bbb-error">
