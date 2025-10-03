@@ -14,7 +14,7 @@
 	<?php } else { ?>
 		<div id="bbb_join_with_password" class="bbb-join-form-block" style="display:none;">
 	<?php } ?>
-			<label id="bbb_meeting_access_code_label" class="bbb-join-room-label"><?php esc_html_e( 'Access Code', 'bigbluebutton' ); ?>:
+			<label id="bbb_meeting_access_code_label" class="bbb-join-room-label"><?php esc_html_e( 'Access Code', 'bigbluebutton' ); ?>:<br>
 			<input type="text" name="bbb_meeting_access_code" aria-labelledby="bbb_meeting_access_code_label" class="bbb-join-room-input">
             </label>
 		</div>
