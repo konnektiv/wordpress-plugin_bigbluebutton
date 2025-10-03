@@ -24,6 +24,12 @@
 			</div>
 		<?php } ?>
 	<br>
+    <?php if ( isset( $_REQUEST['bigbluebutton_invalid_nonce'] ) && $_REQUEST['room_id'] == $room_id ) { ?>
+        <div class="bbb-error">
+            <label><?php esc_html_e( 'The token that was generated to start this room has been expired. Please try again.', 'bigbluebutton' ); ?></label>
+            <br>
+        </div>
+    <?php } ?>
 	<?php if ( isset( $_REQUEST['bigbluebutton_wait_for_mod'] ) && $_REQUEST['room_id'] == $room_id ) { ?>
 		<div class="bbb-join-form-block">
 			<?php do_action( 'bbb_join_form_block_start' ); ?>
